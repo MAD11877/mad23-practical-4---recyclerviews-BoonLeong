@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/userImage"
+                android:id="@+id/pfPage_userImage"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_gravity="center_horizontal"
@@ -30,7 +30,7 @@
                 app:srcCompat="@android:drawable/sym_def_app_icon" />
 
             <TextView
-                android:id="@+id/userName"
+                android:id="@+id/pfPage_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -40,10 +40,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userImage" />
+                app:layout_constraintTop_toBottomOf="@+id/pfPage_userImage" />
 
             <TextView
-                android:id="@+id/userDesc"
+                android:id="@+id/pfPage_userDesc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -55,7 +55,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userName" />
+                app:layout_constraintTop_toBottomOf="@+id/pfPage_userName" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -65,7 +65,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userDesc">
+                app:layout_constraintTop_toBottomOf="@+id/pfPage_userDesc">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"

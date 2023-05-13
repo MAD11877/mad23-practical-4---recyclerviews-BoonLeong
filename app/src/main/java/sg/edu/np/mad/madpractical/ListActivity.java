@@ -1,54 +1,82 @@
 package sg.edu.np.mad.madpractical;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import java.util.Random;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 1;
+
+    static ArrayList<User> testUserList;
+    static UserListAdapter userListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        //External Variables
-        ImageView userImage = (ImageView) findViewById(R.id.listUserImage);
-
-        Intent MainActivity = new Intent(ListActivity.this, MainActivity.class);
-
-        Random random = new Random();
+        //Layout Variables
+        RecyclerView userListRV = findViewById(R.id.userList_RV);
 
         //Initialization
-        AlertDialog.Builder testProfileInfo = new AlertDialog.Builder(this);
-        testProfileInfo.setTitle("Profile");
-        testProfileInfo.setMessage("MADness");
-        testProfileInfo.setCancelable(true);
-        testProfileInfo.setPositiveButton("VIEW", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int id){
-                int randInt = random.nextInt();
+        testUserList = User.createRdTestUserList(20);
 
-                MainActivity.putExtra("randInt", randInt);
-                startActivity(MainActivity);
-            }
-        });
-        testProfileInfo.setNegativeButton("CLOSE", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int id){
-                dialog.dismiss();
-            }
-        });
+        /*
+        Gson gson = new Gson();
+        String json;
 
-        //Event Triggers
-        userImage.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                AlertDialog testProfilePopUp = testProfileInfo.create();
-                testProfilePopUp.show();
+        SharedPreferences userData = getSharedPreferences("userData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userData.edit();
+        for (int i = 0; i < testUserList.size(); i++) {
+            User user = testUserList.get(i);
+            json = gson.toJson(user);
+            editor.putString("userId" + user.getId(), json);
+        }
+        editor.apply();
+         */
+
+        userListAdapter = new UserListAdapter(testUserList);
+        LinearLayoutManager userListLayoutManager = new LinearLayoutManager(this);
+        userListRV.setLayoutManager(userListLayoutManager);
+        userListRV.setItemAnimator(new DefaultItemAnimator());
+        userListRV.setAdapter(userListAdapter);
+    }
+
+    /*
+    protected void onResume() {
+        super.onResume();
+        // Retrieve the value from SharedPreferences
+        SharedPreferences userData = getSharedPreferences("userData", MODE_PRIVATE);
+        String objectValue = userData.getString("object_value", null);
+
+        // Update the text based on the retrieved value
+        if (objectValue != null) {
+            textView.setText(objectValue);
+        }
+    }
+
+     */
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            User user = data.getParcelableExtra("user");
+            int index = testUserList.indexOf(user);
+            if (index >= 0) {
+                testUserList.set(index, user);
+                userListAdapter.notifyDataSetChanged();
             }
-        });
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -15,7 +15,7 @@ public class MessageGroup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_group);
 
-        //External Variables
+        //Layout Variables
         Button grp1Button = (Button) findViewById(R.id.grp1Button);
         Button grp2Button = (Button) findViewById(R.id.grp2Button);
 
